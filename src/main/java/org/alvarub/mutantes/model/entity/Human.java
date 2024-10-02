@@ -18,5 +18,6 @@ public class Human {
 
     @ElementCollection
     private List<String> dna;
+    private int sequences;
     private boolean isMutant = false;
 }
