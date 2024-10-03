@@ -19,7 +19,12 @@ public class HumanController {
 
     @PostMapping("/mutant")
     public ResponseEntity<String> saveMutant(@Valid @RequestBody HumanDTO humanDTO) {
-        humanService.saveHuman(humanDTO);
-        return ResponseEntity.ok("Mutant saved");
+        boolean isMutant = humanService.saveHuman(humanDTO);
+
+        if (isMutant) {
+            return ResponseEntity.ok("Mutant verified.");
+        } else {
+            return ResponseEntity.status(403).body("Human detected.");
+        }
     }
 }
