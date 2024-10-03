@@ -19,7 +19,7 @@ public class HumanService {
     @Autowired
     private HumanMapper humanMapper;
 
-    public void saveHuman(HumanDTO humanDTO) {
+    public boolean saveHuman(HumanDTO humanDTO) {
         validateDna(humanDTO.dna());
 
         int sequences = countSequences(humanDTO.dna());
@@ -30,6 +30,8 @@ public class HumanService {
         human.setMutant(isMutant);
 
         humanRepo.save(human);
+
+        return isMutant;
     }
 
     // Valida que el dna se componga de 6 strings con 6 caracteres c/u y solo contengan A, T, C y G
@@ -50,7 +52,7 @@ public class HumanService {
 
     // Cuenta las secuencias horizontales, verticales y diagonales. Para cada caso, se comparan
     // los caracteres sucesivos sin salirse de los límites de la matriz.
-    public int countSequences(List<String> dna) {
+    private int countSequences(List<String> dna) {
         int sequences = 0;
         String[] dnaArray = dna.toArray(new String[0]);
         int length = dnaArray.length;
