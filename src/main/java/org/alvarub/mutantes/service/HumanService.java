@@ -49,51 +49,90 @@ public class HumanService {
     }
 
     // Cuenta las secuencias horizontales, verticales y diagonales. Para cada caso, se comparan
-    // los caracteres sucesivos sin salirse de los límites de la matriz.
+    // los 3 caracteres sucesivos sin salirse de los límites de la matriz.
     private boolean verifyMutant(List<String> dna) {
         int sequences = 0;
         String[] dnaArray = dna.toArray(new String[0]);
         int length = dnaArray.length;
 
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
-
-                // Horizontal
-                if (j + 3 < length) {
-                    if (dnaArray[i].charAt(j) == dnaArray[i].charAt(j + 1) &&
-                            dnaArray[i].charAt(j) == dnaArray[i].charAt(j + 2) &&
-                            dnaArray[i].charAt(j) == dnaArray[i].charAt(j + 3)) {
+        // Horizontal
+        for (int fil = 0; fil < length; fil++) {
+            for (int col = 0; col < length; col++) {
+                if (col + 3 < length) {
+                    char currentChar = dnaArray[fil].charAt(col);
+                    if (dnaArray[fil].charAt(col) == dnaArray[fil].charAt(col + 1) &&
+                            dnaArray[fil].charAt(col) == dnaArray[fil].charAt(col + 2) &&
+                            dnaArray[fil].charAt(col) == dnaArray[fil].charAt(col + 3)) {
                         sequences++;
+
+                        while (col + 1 < length && dnaArray[fil].charAt(col + 1) == currentChar) {
+                            col++;
+                        }
+
                         if (sequences > 1) return true;
                     }
                 }
+            }
+        }
 
-                // Vertical
-                if (i + 3 < length) {
-                    if (dnaArray[i].charAt(j) == dnaArray[i + 1].charAt(j) &&
-                            dnaArray[i].charAt(j) == dnaArray[i + 2].charAt(j) &&
-                            dnaArray[i].charAt(j) == dnaArray[i + 3].charAt(j)) {
+        // Vertical
+        for (int fil = 0; fil < length; fil++) {
+            for (int col = 0; col < length; col++) {
+                if (fil + 3 < length) {
+                    char currentChar = dnaArray[fil].charAt(col);
+                    if (dnaArray[fil].charAt(col) == dnaArray[fil + 1].charAt(col) &&
+                            dnaArray[fil].charAt(col) == dnaArray[fil + 2].charAt(col) &&
+                            dnaArray[fil].charAt(col) == dnaArray[fil + 3].charAt(col)) {
                         sequences++;
+
+                        while (fil + 1 < length && dnaArray[fil + 1].charAt(col) == currentChar) {
+                            fil++;
+                        }
+
                         if (sequences > 1) return true;
                     }
                 }
+            }
+        }
 
-                // Diagonal
-                if (i + 3 < length && j + 3 < length) {
-                    if (dnaArray[i].charAt(j) == dnaArray[i + 1].charAt(j + 1) &&
-                            dnaArray[i].charAt(j) == dnaArray[i + 2].charAt(j + 2) &&
-                            dnaArray[i].charAt(j) == dnaArray[i + 3].charAt(j + 3)) {
+        // Diagonal
+        for (int fil = 0; fil < length; fil++) {
+            for (int col = 0; col < length; col++) {
+                if (fil + 3 < length && col + 3 < length) {
+                    char currentChar = dnaArray[fil].charAt(col);
+                    if (dnaArray[fil].charAt(col) == dnaArray[fil + 1].charAt(col + 1) &&
+                            dnaArray[fil].charAt(col) == dnaArray[fil + 2].charAt(col + 2) &&
+                            dnaArray[fil].charAt(col) == dnaArray[fil + 3].charAt(col + 3)) {
                         sequences++;
+
+                        while (fil + 1 < length && col + 1 < length &&
+                                dnaArray[fil + 1].charAt(col + 1) == currentChar) {
+                            fil++;
+                            col++;
+                        }
+
                         if (sequences > 1) return true;
                     }
                 }
+            }
+        }
 
-                // Diagonal inversa
-                if (i + 3 < length && j - 3 >= 0) {
-                    if (dnaArray[i].charAt(j) == dnaArray[i + 1].charAt(j - 1) &&
-                            dnaArray[i].charAt(j) == dnaArray[i + 2].charAt(j - 2) &&
-                            dnaArray[i].charAt(j) == dnaArray[i + 3].charAt(j - 3)) {
+        // Diagonal inversa
+        for (int fil = 0; fil < length; fil++) {
+            for (int col = 0; col < length; col++) {
+                if (fil + 3 < length && col - 3 >= 0) {
+                    char currentChar = dnaArray[fil].charAt(col);
+                    if (dnaArray[fil].charAt(col) == dnaArray[fil + 1].charAt(col - 1) &&
+                            dnaArray[fil].charAt(col) == dnaArray[fil + 2].charAt(col - 2) &&
+                            dnaArray[fil].charAt(col) == dnaArray[fil + 3].charAt(col - 3)) {
                         sequences++;
+
+                        while (fil + 1 < length && col - 1 >= 0 &&
+                                dnaArray[fil + 1].charAt(col - 1) == currentChar) {
+                            fil++;
+                            col--;
+                        }
+                        
                         if (sequences > 1) return true;
                     }
                 }
