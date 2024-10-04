@@ -22,11 +22,9 @@ public class HumanService {
     public boolean saveHuman(HumanDTO humanDTO) {
         validateDna(humanDTO.dna());
 
-        int sequences = countSequences(humanDTO.dna());
-        boolean isMutant = sequences > 1;
+        boolean isMutant = verifyMutant(humanDTO.dna());
 
         Human human = humanMapper.humanDTOToHuman(humanDTO);
-        human.setSequences(sequences);
         human.setMutant(isMutant);
 
         humanRepo.save(human);
@@ -52,7 +50,7 @@ public class HumanService {
 
     // Cuenta las secuencias horizontales, verticales y diagonales. Para cada caso, se comparan
     // los caracteres sucesivos sin salirse de los límites de la matriz.
-    private int countSequences(List<String> dna) {
+    private boolean verifyMutant(List<String> dna) {
         int sequences = 0;
         String[] dnaArray = dna.toArray(new String[0]);
         int length = dnaArray.length;
@@ -66,6 +64,7 @@ public class HumanService {
                             dnaArray[i].charAt(j) == dnaArray[i].charAt(j + 2) &&
                             dnaArray[i].charAt(j) == dnaArray[i].charAt(j + 3)) {
                         sequences++;
+                        if (sequences > 1) return true;
                     }
                 }
 
@@ -75,6 +74,7 @@ public class HumanService {
                             dnaArray[i].charAt(j) == dnaArray[i + 2].charAt(j) &&
                             dnaArray[i].charAt(j) == dnaArray[i + 3].charAt(j)) {
                         sequences++;
+                        if (sequences > 1) return true;
                     }
                 }
 
@@ -84,6 +84,7 @@ public class HumanService {
                             dnaArray[i].charAt(j) == dnaArray[i + 2].charAt(j + 2) &&
                             dnaArray[i].charAt(j) == dnaArray[i + 3].charAt(j + 3)) {
                         sequences++;
+                        if (sequences > 1) return true;
                     }
                 }
 
@@ -93,11 +94,12 @@ public class HumanService {
                             dnaArray[i].charAt(j) == dnaArray[i + 2].charAt(j - 2) &&
                             dnaArray[i].charAt(j) == dnaArray[i + 3].charAt(j - 3)) {
                         sequences++;
+                        if (sequences > 1) return true;
                     }
                 }
             }
         }
 
-        return sequences;
+        return false;
     }
 }

@@ -22,8 +22,6 @@ public class Human {
     @NotNull
     private String name;
 
-    private int sequences = 0;
-
     private boolean isMutant = false;
 
     @NotNull
