@@ -41,6 +41,7 @@ public class MutantDetectorService {
                         currentChar == dnaArray[fil].charAt(col + 3)) {
 
                     sequences++;
+                    System.out.println("Horizontal sequence found at: (" + fil + ", " + col + ")");
 
                     // Acá se procura no volver a contar la misma secuencia
                     while (col + 1 < length && dnaArray[fil].charAt(col + 1) == currentChar) {
@@ -62,6 +63,7 @@ public class MutantDetectorService {
                         currentChar == dnaArray[fil + 3].charAt(col)) {
 
                     sequences++;
+                    System.out.println("Vertical sequence found at: (" + fil + ", " + col + ")");
 
                     // Acá se procura no volver a contar la misma secuencia
                     while (fil + 1 < length && dnaArray[fil + 1].charAt(col) == currentChar) {
@@ -82,6 +84,7 @@ public class MutantDetectorService {
                         currentChar == dnaArray[fil + 3].charAt(col + 3)) {
 
                     sequences++;
+                    System.out.println("Diagonal (left to right) sequence found at: (" + fil + ", " + col + ")");
 
                     // Acá se procura no volver a contar la misma secuencia
                     while (fil + 1 < length && col + 1 < length &&
@@ -108,6 +111,7 @@ public class MutantDetectorService {
                         currentChar == dnaArray[fil + 3].charAt(col - 3)) {
 
                     sequences++;
+                    System.out.println("Diagonal (right to left) sequence found at: (" + fil + ", " + col + ")");
 
                     // Acá se procura no volver a contar la misma secuencia
                     while (fil + 1 < length && col - 1 >= 0 &&
