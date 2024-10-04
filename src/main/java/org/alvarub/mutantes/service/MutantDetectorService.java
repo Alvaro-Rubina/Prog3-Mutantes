@@ -68,7 +68,6 @@ public class MutantDetectorService {
                         fil++;
                     }
 
-                    System.out.println("Secuencias: " + sequences);
                     if (sequences > 1) return true;
                 }
             }
@@ -95,7 +94,6 @@ public class MutantDetectorService {
                     fil = Math.min(fil, length - 4);
                     col = Math.min(col, length - 4);
 
-                    System.out.println("Secuencias: " + sequences);
                     if (sequences > 1) return true;
                 }
             }
@@ -110,7 +108,7 @@ public class MutantDetectorService {
                         currentChar == dnaArray[fil + 3].charAt(col - 3)) {
 
                     sequences++;
-                    
+
                     // Acá se procura no volver a contar la misma secuencia
                     while (fil + 1 < length && col - 1 >= 0 &&
                             dnaArray[fil + 1].charAt(col - 1) == currentChar) {
@@ -122,7 +120,6 @@ public class MutantDetectorService {
                     fil = Math.min(fil, length - 4);
                     col = Math.max(col, 3);
 
-                    System.out.println("Secuencias: " + sequences);
                     if (sequences > 1) return true;
                 }
             }
