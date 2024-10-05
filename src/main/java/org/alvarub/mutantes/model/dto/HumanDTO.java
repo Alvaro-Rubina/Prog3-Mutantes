@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record HumanDTO(@NotBlank String name ,
-                       @NotNull List<String> dna) {
+public record HumanDTO(@NotBlank(message = "The 'name' field is mandatory") String name ,
+                       @NotNull(message = "The 'dna' field is mandatory") List<String> dna) {
 }
