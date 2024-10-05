@@ -3,7 +3,9 @@ package org.alvarub.mutantes.service;
 import org.alvarub.mutantes.utils.exceptions.DnaNotValidException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MutantDetectorService {
@@ -31,7 +33,7 @@ public class MutantDetectorService {
         String[] dnaArray = dna.toArray(new String[0]);
         int length = dnaArray.length;
 
-        /*// Horizontal
+        // Horizontal
         for (int fil = 0; fil < length; fil++) {
             for (int col = 0; col < length - 3; col++) {
                 char currentChar = dnaArray[fil].charAt(col);
@@ -73,11 +75,18 @@ public class MutantDetectorService {
                     if (sequences > 1) return true;
                 }
             }
-        }*/
+        }
+
+        // Set que guarda las posiciones que ya forman parte de una secuencia diagonal
+        Set<String> usedPosition = new HashSet<>();
 
         // Diagonal (de izquierda a derecha)
         for (int fil = 0; fil < length - 3; fil++) {
             for (int col = 0; col < length - 3; col++) {
+
+                // Si la psicion ya fue usada se salta
+                if (usedPosition.contains(fil + "," + col)) continue;
+
                 char currentChar = dnaArray[fil].charAt(col);
                 if (currentChar == dnaArray[fil + 1].charAt(col + 1) &&
                         currentChar == dnaArray[fil + 2].charAt(col + 2) &&
@@ -86,14 +95,23 @@ public class MutantDetectorService {
                     sequences++;
                     System.out.println("Diagonal (left to right) sequence found at: (" + fil + ", " + col + ")");
 
+                    // Se guardan las posiciones de la secuencia
+                    for (int i = 0; i < 4; i++) {
+                        usedPosition.add((fil + i) + "," + (col + i));
+                    }
+
                     if (sequences > 1) return true;
                 }
             }
         }
 
-        /*// Diagonal (de derecha a izquierda)
+        // Diagonal (de derecha a izquierda)
         for (int fil = 0; fil < length - 3; fil++) {
             for (int col = 3; col < length; col++) {
+
+                // Si la posicion ya fue usada se salta
+                if (usedPosition.contains(fil + "," + col)) continue;
+
                 char currentChar = dnaArray[fil].charAt(col);
                 if (currentChar == dnaArray[fil + 1].charAt(col - 1) &&
                         currentChar == dnaArray[fil + 2].charAt(col - 2) &&
@@ -102,10 +120,15 @@ public class MutantDetectorService {
                     sequences++;
                     System.out.println("Diagonal (right to left) sequence found at: (" + fil + ", " + col + ")");
 
+                    // Se guardan las posiciones de la secuencia
+                    for (int i = 0; i < 4; i++) {
+                        usedPosition.add((fil + i) + "," + (col - i));
+                    }
+
                     if (sequences > 1) return true;
                 }
             }
-        }*/
+        }
 
         return false;
     }
