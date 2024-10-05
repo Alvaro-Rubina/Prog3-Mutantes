@@ -20,9 +20,12 @@ public class HumanService implements IHumanService {
     @Autowired
     private MutantDetectorService mutantDetectorService;
 
+    @Autowired
+    private DnaValidationService dnaValidationService;
+
     //
     public boolean saveHuman(HumanDTO humanDTO) {
-        mutantDetectorService.validateDna(humanDTO.dna());
+        dnaValidationService.validateDna(humanDTO.dna());
 
         if (this.existsByDna(humanDTO)){
             throw new DnaAlreadyExistsException("A human with the same DNA already exists.");
