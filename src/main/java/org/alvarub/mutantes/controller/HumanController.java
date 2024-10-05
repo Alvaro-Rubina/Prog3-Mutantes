@@ -17,7 +17,7 @@ public class HumanController {
     @Autowired
     IHumanService humanService;
 
-    @PostMapping("/mutant")
+    @PostMapping("/mutant/")
     public ResponseEntity<String> saveMutant(@Valid @RequestBody HumanDTO humanDTO) {
         boolean isMutant = humanService.saveHuman(humanDTO);
 
