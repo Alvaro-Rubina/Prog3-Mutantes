@@ -27,4 +27,11 @@ public class Human {
     @NotNull
     @ElementCollection
     private List<String> dna;
+
+    private String fullDna;
+
+    //
+    public void setFullDna(List<String> dna){
+        this.fullDna = String.join("-", this.dna);
+    }
 }
