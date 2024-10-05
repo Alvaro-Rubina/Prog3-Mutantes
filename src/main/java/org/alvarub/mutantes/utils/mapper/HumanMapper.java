@@ -2,7 +2,9 @@ package org.alvarub.mutantes.utils.mapper;
 
 import org.alvarub.mutantes.model.dto.HumanDTO;
 import org.alvarub.mutantes.model.entity.Human;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring", uses = HumanMapper.class)
 public interface HumanMapper {
@@ -10,6 +12,9 @@ public interface HumanMapper {
     //
     Human humanDTOToHuman(HumanDTO humanDTO);
 
-    HumanDTO humanToHumanDTO(Human human);
+    @AfterMapping
+    default void setFullDna(HumanDTO humanDTO, @MappingTarget Human human) {
+        human.setFullDna(humanDTO.dna());
+    }
 
 }
