@@ -3,12 +3,9 @@ package org.alvarub.mutantes.service;
 import org.alvarub.mutantes.model.dto.HumanDTO;
 import org.alvarub.mutantes.model.entity.Human;
 import org.alvarub.mutantes.repository.HumanRepository;
-import org.alvarub.mutantes.utils.exceptions.DnaNotValidException;
 import org.alvarub.mutantes.utils.mapper.HumanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class HumanService implements IHumanService {
@@ -33,6 +30,5 @@ public class HumanService implements IHumanService {
         humanRepo.save(human);
         return isMutant;
     }
-
 
 }

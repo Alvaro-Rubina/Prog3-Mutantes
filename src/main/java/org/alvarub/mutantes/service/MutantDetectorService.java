@@ -31,7 +31,7 @@ public class MutantDetectorService {
         String[] dnaArray = dna.toArray(new String[0]);
         int length = dnaArray.length;
 
-        // Horizontal
+        /*// Horizontal
         for (int fil = 0; fil < length; fil++) {
             for (int col = 0; col < length - 3; col++) {
                 char currentChar = dnaArray[fil].charAt(col);
@@ -73,7 +73,7 @@ public class MutantDetectorService {
                     if (sequences > 1) return true;
                 }
             }
-        }
+        }*/
 
         // Diagonal (de izquierda a derecha)
         for (int fil = 0; fil < length - 3; fil++) {
@@ -86,23 +86,12 @@ public class MutantDetectorService {
                     sequences++;
                     System.out.println("Diagonal (left to right) sequence found at: (" + fil + ", " + col + ")");
 
-                    // Acá se procura no volver a contar la misma secuencia
-                    while (fil + 1 < length && col + 1 < length &&
-                            dnaArray[fil + 1].charAt(col + 1) == currentChar) {
-                        fil++;
-                        col++;
-                    }
-
-                    // Valido los límites para no salirme de la matriz
-                    fil = Math.min(fil, length - 4);
-                    col = Math.min(col, length - 4);
-
                     if (sequences > 1) return true;
                 }
             }
         }
 
-        // Diagonal (de derecha a izquierda)
+        /*// Diagonal (de derecha a izquierda)
         for (int fil = 0; fil < length - 3; fil++) {
             for (int col = 3; col < length; col++) {
                 char currentChar = dnaArray[fil].charAt(col);
@@ -113,21 +102,10 @@ public class MutantDetectorService {
                     sequences++;
                     System.out.println("Diagonal (right to left) sequence found at: (" + fil + ", " + col + ")");
 
-                    // Acá se procura no volver a contar la misma secuencia
-                    while (fil + 1 < length && col - 1 >= 0 &&
-                            dnaArray[fil + 1].charAt(col - 1) == currentChar) {
-                        fil++;
-                        col--;
-                    }
-
-                    // Valido los límites para no salirme de la matriz
-                    fil = Math.min(fil, length - 4);
-                    col = Math.max(col, 3);
-
                     if (sequences > 1) return true;
                 }
             }
-        }
+        }*/
 
         return false;
     }
