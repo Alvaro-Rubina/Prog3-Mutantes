@@ -3,6 +3,7 @@ package org.alvarub.mutantes.service;
 import org.alvarub.mutantes.model.dto.HumanDTO;
 import org.alvarub.mutantes.model.entity.Human;
 import org.alvarub.mutantes.repository.HumanRepository;
+import org.alvarub.mutantes.utils.exceptions.DnaAlreadyExistsException;
 import org.alvarub.mutantes.utils.mapper.HumanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class HumanService implements IHumanService {
     //
     public boolean saveHuman(HumanDTO humanDTO) {
         mutantDetectorService.validateDna(humanDTO.dna());
+
+        if (this.existsByDna(humanDTO)){
+            throw new DnaAlreadyExistsException("A human with the same DNA already exists.");
+        }
+
         boolean isMutant = mutantDetectorService.verifyMutant(humanDTO.dna());
 
         Human human = humanMapper.humanDTOToHuman(humanDTO);
@@ -29,6 +35,10 @@ public class HumanService implements IHumanService {
 
         humanRepo.save(human);
         return isMutant;
+    }
+
+    public boolean existsByDna(HumanDTO humanDTO) {
+        return (humanRepo.existsByFullDna(String.join("-", humanDTO.dna())));
     }
 
 }
