@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class HumanService {
+public class HumanService implements IHumanService {
 
     @Autowired
     private HumanRepository humanRepo;
@@ -22,16 +22,15 @@ public class HumanService {
     @Autowired
     private MutantDetectorService mutantDetectorService;
 
+    //
     public boolean saveHuman(HumanDTO humanDTO) {
         mutantDetectorService.validateDna(humanDTO.dna());
-
         boolean isMutant = mutantDetectorService.verifyMutant(humanDTO.dna());
 
         Human human = humanMapper.humanDTOToHuman(humanDTO);
         human.setMutant(isMutant);
 
         humanRepo.save(human);
-
         return isMutant;
     }
 
