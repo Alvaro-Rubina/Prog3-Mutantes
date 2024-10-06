@@ -4,6 +4,7 @@ RUN apk update
 RUN apk add openjdk17
 
 COPY . .
+RUN chmod +x ./mvnw
 RUN ./mvnw clean package -DskipTests
 
 FROM openjdk:17-alpine
