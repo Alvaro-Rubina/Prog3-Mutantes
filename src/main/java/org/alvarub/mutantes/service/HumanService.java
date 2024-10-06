@@ -1,6 +1,7 @@
 package org.alvarub.mutantes.service;
 
 import org.alvarub.mutantes.model.dto.HumanDTO;
+import org.alvarub.mutantes.model.dto.StatsDTO;
 import org.alvarub.mutantes.model.entity.Human;
 import org.alvarub.mutantes.repository.HumanRepository;
 import org.alvarub.mutantes.utils.exceptions.DnaAlreadyExistsException;
@@ -24,6 +25,7 @@ public class HumanService implements IHumanService {
     private DnaValidationService dnaValidationService;
 
     //
+    @Override
     public boolean saveHuman(HumanDTO humanDTO) {
         dnaValidationService.validateDna(humanDTO.dna());
 
@@ -40,8 +42,19 @@ public class HumanService implements IHumanService {
         return isMutant;
     }
 
+    @Override
     public boolean existsByDna(HumanDTO humanDTO) {
-        return (humanRepo.existsByFullDna(String.join("-", humanDTO.dna())));
+        String fullDna = String.join("-", humanDTO.dna());
+        return humanRepo.existsByFullDna(fullDna);
+    }
+
+    @Override
+    public StatsDTO getStats(){
+        long countMutantDna = humanRepo.countByIsMutant(true);
+        long countHumanDna = humanRepo.countByIsMutant(false);
+        double ratio = (countHumanDna == 0) ? 0 : (double) countMutantDna / countHumanDna;
+
+        return new StatsDTO(countMutantDna, countHumanDna, ratio);
     }
 
 }
