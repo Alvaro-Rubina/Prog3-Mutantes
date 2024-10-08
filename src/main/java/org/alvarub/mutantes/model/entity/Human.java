@@ -26,6 +26,7 @@ public class Human {
 
     @NotNull
     @ElementCollection
+    @Transient
     private List<String> dna;
 
     private String fullDna;
