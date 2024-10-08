@@ -45,13 +45,9 @@ public class MutantDetectorService {
                     sequences++;
                     System.out.println("Horizontal sequence found at: (" + fil + ", " + col + ")");
 
-                    // Acá se procura no volver a contar la misma secuencia
-                    while (col + 1 < length && dnaArray[fil].charAt(col + 1) == currentChar) {
-                        col++;
-                    }
-
-                    if (sequences > 1) return true;
+                    break;
                 }
+                if (sequences > 1) return true;
             }
         }
 
@@ -66,14 +62,10 @@ public class MutantDetectorService {
 
                     sequences++;
                     System.out.println("Vertical sequence found at: (" + fil + ", " + col + ")");
-
-                    // Acá se procura no volver a contar la misma secuencia
-                    while (fil + 1 < length && dnaArray[fil + 1].charAt(col) == currentChar) {
-                        fil++;
-                    }
-
-                    if (sequences > 1) return true;
+                    
+                    break;
                 }
+                if (sequences > 1) return true;
             }
         }
 
