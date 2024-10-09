@@ -32,7 +32,7 @@ public class Human {
     private String fullDna;
 
     //
-    public void setFullDna(List<String> dna){
+    public void setFullDna(){
         this.fullDna = String.join("-", this.dna);
     }
 }

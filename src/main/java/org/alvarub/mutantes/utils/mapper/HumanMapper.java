@@ -13,8 +13,8 @@ public interface HumanMapper {
     Human humanDTOToHuman(HumanDTO humanDTO);
 
     @AfterMapping
-    default void setFullDna(HumanDTO humanDTO, @MappingTarget Human human) {
-        human.setFullDna(humanDTO.dna());
+    default void setFullDna(@MappingTarget Human human) {
+        human.setFullDna();
     }
 
 }
