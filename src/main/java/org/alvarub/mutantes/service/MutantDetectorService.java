@@ -12,22 +12,22 @@ public class MutantDetectorService {
 
     // Valida que el dna se componga de 6 strings con 6 caracteres c/u y solo contengan A, T, C y G
     public void validateDna(List<String> dna) {
-        if (dna.size() != 6) {
-            throw new DnaNotValidException("The DNA must have exactly 6 strands.");
+        int size = dna.size();
+        if (dna.size() < 4) {
+            throw new DnaNotValidException("El ADN debe tener al menos 4 filas.");
         }
 
         for (String str : dna) {
-            if (str.length() != 6) {
-                throw new DnaNotValidException("Each DNA strand must be exactly 6 characters long.");
+            if (str.length() != size) {
+                throw new DnaNotValidException("Cada fila del ADN debe tener la misma longitud que el número de filas " + "(" + size + ").");
 
             } else if (!str.toUpperCase().matches("[ATCG]+")) {
-                throw new DnaNotValidException("The DNA must only contain the letters A, T, C and G.");
+                throw new DnaNotValidException("El ADN solo puede contener los caracteres A, T, C y G.");
             }
         }
     }
 
-    // Se cuentan las secuencias de 4 caracteres iguales en horizontal, vertical y diagonales.
-    // En cada caso, se procura no salirse de los límites de la matriz. Si se encuentran más de una secuencia, se retorna true.
+    //
     public boolean verifyMutant(List<String> dna) {
         int sequences = 0;
         String[] dnaArray = dna.toArray(new String[0]);
@@ -35,7 +35,7 @@ public class MutantDetectorService {
 
         // Horizontal
         for (int fil = 0; fil < length; fil++) {
-            for (int col = 0; col < length - 3; col++) {
+            for (int col = 0; col < (length / 2); col++) {
                 char currentChar = dnaArray[fil].charAt(col);
 
                 if (currentChar == dnaArray[fil].charAt(col + 1) &&
@@ -43,7 +43,7 @@ public class MutantDetectorService {
                         currentChar == dnaArray[fil].charAt(col + 3)) {
 
                     sequences++;
-                    System.out.println("Horizontal sequence found at: (" + fil + ", " + col + ")");
+                    System.out.println("Secuencia horizontal encontrada en: (" + fil + ", " + col + ")");
 
                     break;
                 }
@@ -53,7 +53,7 @@ public class MutantDetectorService {
 
         // Vertical
         for (int col = 0; col < length; col++) {
-            for (int fil = 0; fil < length - 3; fil++) {
+            for (int fil = 0; fil < (length / 2); fil++) {
                 char currentChar = dnaArray[fil].charAt(col);
 
                 if (currentChar == dnaArray[fil + 1].charAt(col) &&
@@ -61,7 +61,7 @@ public class MutantDetectorService {
                         currentChar == dnaArray[fil + 3].charAt(col)) {
 
                     sequences++;
-                    System.out.println("Vertical sequence found at: (" + fil + ", " + col + ")");
+                    System.out.println("Secuencia vertical encontrada en: (" + fil + ", " + col + ")");
                     
                     break;
                 }
@@ -73,8 +73,8 @@ public class MutantDetectorService {
         Set<String> usedPosition = new HashSet<>();
 
         // Diagonal (de izquierda a derecha)
-        for (int fil = 0; fil < length - 3; fil++) {
-            for (int col = 0; col < length - 3; col++) {
+        for (int fil = 0; fil < (length / 2); fil++) {
+            for (int col = 0; col < (length / 2); col++) {
 
                 // Si la psicion ya fue usada se salta
                 if (usedPosition.contains(fil + "," + col)) continue;
@@ -85,7 +85,7 @@ public class MutantDetectorService {
                         currentChar == dnaArray[fil + 3].charAt(col + 3)) {
 
                     sequences++;
-                    System.out.println("Diagonal (left to right) sequence found at: (" + fil + ", " + col + ")");
+                    System.out.println("Secuencia diagonal (izquierda a derecha) encontrada en: (" + fil + ", " + col + ")");
 
                     // Se guardan las posiciones de la secuencia
                     for (int i = 0; i < 4; i++) {
@@ -98,8 +98,8 @@ public class MutantDetectorService {
         }
 
         // Diagonal (de derecha a izquierda)
-        for (int fil = 0; fil < length - 3; fil++) {
-            for (int col = 3; col < length; col++) {
+        for (int fil = 0; fil < (length / 2); fil++) {
+            for (int col = (length / 2); col < length; col++) {
 
                 // Si la posicion ya fue usada se salta
                 if (usedPosition.contains(fil + "," + col)) continue;
@@ -110,7 +110,7 @@ public class MutantDetectorService {
                         currentChar == dnaArray[fil + 3].charAt(col - 3)) {
 
                     sequences++;
-                    System.out.println("Diagonal (right to left) sequence found at: (" + fil + ", " + col + ")");
+                    System.out.println("Secuencia diagonal (derecha a izquierda) encontrada en: (" + fil + ", " + col + ")");
 
                     // Se guardan las posiciones de la secuencia
                     for (int i = 0; i < 4; i++) {
