@@ -11,14 +11,14 @@ import java.util.Set;
 public class MutantDetectorService {
 
     // Valida que el dna se componga de 6 strings con 6 caracteres c/u y solo contengan A, T, C y G
-    public void validateDna(List<String> dna) {
+    public void validateDna(String[] dna) {
         if (dna == null){
             throw new NullPointerException("El ADN no puede ser nulo.");
 
         }
 
-        int size = dna.size();
-        if (dna.size() < 4) {
+        int size = dna.length;
+        if (dna.length < 4) {
             throw new DnaNotValidException("El ADN debe tener al menos 4 filas.");
         }
 
@@ -33,19 +33,18 @@ public class MutantDetectorService {
     }
 
     //
-    public boolean verifyMutant(List<String> dna) {
+    public boolean verifyMutant(String[] dna) {
         int sequences = 0;
-        String[] dnaArray = dna.toArray(new String[0]);
-        int length = dnaArray.length;
+        int length = dna.length;
 
         // Horizontal
         for (int fil = 0; fil < length; fil++) {
             for (int col = 0; col < (length / 2); col++) {
-                char currentChar = dnaArray[fil].charAt(col);
+                char currentChar = dna[fil].charAt(col);
 
-                if (currentChar == dnaArray[fil].charAt(col + 1) &&
-                        currentChar == dnaArray[fil].charAt(col + 2) &&
-                        currentChar == dnaArray[fil].charAt(col + 3)) {
+                if (currentChar == dna[fil].charAt(col + 1) &&
+                        currentChar == dna[fil].charAt(col + 2) &&
+                        currentChar == dna[fil].charAt(col + 3)) {
 
                     sequences++;
                     System.out.println("Secuencia horizontal encontrada en: (" + fil + ", " + col + ")");
@@ -59,11 +58,11 @@ public class MutantDetectorService {
         // Vertical
         for (int col = 0; col < length; col++) {
             for (int fil = 0; fil < (length / 2); fil++) {
-                char currentChar = dnaArray[fil].charAt(col);
+                char currentChar = dna[fil].charAt(col);
 
-                if (currentChar == dnaArray[fil + 1].charAt(col) &&
-                        currentChar == dnaArray[fil + 2].charAt(col) &&
-                        currentChar == dnaArray[fil + 3].charAt(col)) {
+                if (currentChar == dna[fil + 1].charAt(col) &&
+                        currentChar == dna[fil + 2].charAt(col) &&
+                        currentChar == dna[fil + 3].charAt(col)) {
 
                     sequences++;
                     System.out.println("Secuencia vertical encontrada en: (" + fil + ", " + col + ")");
@@ -84,10 +83,10 @@ public class MutantDetectorService {
                 // Si la psicion ya fue usada se salta
                 if (usedPosition.contains(fil + "," + col)) continue;
 
-                char currentChar = dnaArray[fil].charAt(col);
-                if (currentChar == dnaArray[fil + 1].charAt(col + 1) &&
-                        currentChar == dnaArray[fil + 2].charAt(col + 2) &&
-                        currentChar == dnaArray[fil + 3].charAt(col + 3)) {
+                char currentChar = dna[fil].charAt(col);
+                if (currentChar == dna[fil + 1].charAt(col + 1) &&
+                        currentChar == dna[fil + 2].charAt(col + 2) &&
+                        currentChar == dna[fil + 3].charAt(col + 3)) {
 
                     sequences++;
                     System.out.println("Secuencia diagonal (izquierda a derecha) encontrada en: (" + fil + ", " + col + ")");
@@ -109,10 +108,10 @@ public class MutantDetectorService {
                 // Si la posicion ya fue usada se salta
                 if (usedPosition.contains(fil + "," + col)) continue;
 
-                char currentChar = dnaArray[fil].charAt(col);
-                if (currentChar == dnaArray[fil + 1].charAt(col - 1) &&
-                        currentChar == dnaArray[fil + 2].charAt(col - 2) &&
-                        currentChar == dnaArray[fil + 3].charAt(col - 3)) {
+                char currentChar = dna[fil].charAt(col);
+                if (currentChar == dna[fil + 1].charAt(col - 1) &&
+                        currentChar == dna[fil + 2].charAt(col - 2) &&
+                        currentChar == dna[fil + 3].charAt(col - 3)) {
 
                     sequences++;
                     System.out.println("Secuencia diagonal (derecha a izquierda) encontrada en: (" + fil + ", " + col + ")");
