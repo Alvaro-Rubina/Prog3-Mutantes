@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -52,7 +51,8 @@ class HumanServiceTest {
     @Test
     @DisplayName("save: ADN Mutante")
     void saveHumanMutantTrue(){
-        humanDTO = new HumanDTO("Nombre", List.of("CCCC", "TATA", "GGGG", "ATAT"));
+        String[] dna = {"CCCC", "TATA", "GGGG", "ATAT"};
+        humanDTO = new HumanDTO("Nombre", dna);
 
         when(humanRepo.existsByFullDna(String.join("-", humanDTO.dna()))).thenReturn(false);
         when(mutantDetectorService.verifyMutant(humanDTO.dna())).thenReturn(true);
@@ -67,7 +67,8 @@ class HumanServiceTest {
     @Test
     @DisplayName("save: ADN no mutante")
     void saveHumanMutantFalse() {
-        humanDTO = new HumanDTO("Nombre", List.of("CCCCCC", "TATATA", "GCGCGC", "ATATAT"));
+        String[] dna = {"CCCCCC", "TATATA", "GCGCGC", "ATATAT"};
+        humanDTO = new HumanDTO("Nombre", dna);
 
         when(humanRepo.existsByFullDna(String.join("-", humanDTO.dna()))).thenReturn(false);
         when(mutantDetectorService.verifyMutant(humanDTO.dna())).thenReturn(false);
@@ -82,7 +83,8 @@ class HumanServiceTest {
     @Test
     @DisplayName("save: ADN ya existente")
     void existsByDna() {
-        humanDTO = new HumanDTO("Nombre", List.of("CCCCCC", "TATATA", "GCGCGC", "ATATAT"));
+        String[] dna = {"CCCCCC", "TATATA", "GCGCGC", "ATATAT"};
+        humanDTO = new HumanDTO("Nombre", dna);
 
         when(humanRepo.existsByFullDna(String.join("-", humanDTO.dna()))).thenReturn(true);
 
