@@ -12,6 +12,11 @@ public class MutantDetectorService {
 
     // Valida que el dna se componga de 6 strings con 6 caracteres c/u y solo contengan A, T, C y G
     public void validateDna(List<String> dna) {
+        if (dna == null){
+            throw new NullPointerException("El ADN no puede ser nulo.");
+
+        }
+
         int size = dna.size();
         if (dna.size() < 4) {
             throw new DnaNotValidException("El ADN debe tener al menos 4 filas.");
@@ -19,7 +24,7 @@ public class MutantDetectorService {
 
         for (String str : dna) {
             if (str.length() != size) {
-                throw new DnaNotValidException("Cada fila del ADN debe tener la misma longitud que el número de filas " + "(" + size + ").");
+                throw new DnaNotValidException("Cada fila del ADN debe tener la misma longitud que el número de filas.");
 
             } else if (!str.toUpperCase().matches("[ATCG]+")) {
                 throw new DnaNotValidException("El ADN solo puede contener los caracteres A, T, C y G.");
