@@ -39,7 +39,7 @@ public class MutantDetectorService {
 
         // Horizontal
         for (int fil = 0; fil < length; fil++) {
-            for (int col = 0; col < (length / 2); col++) {
+            for (int col = 0; col <= length - 4; col++) {
                 char currentChar = dna[fil].charAt(col);
 
                 if (currentChar == dna[fil].charAt(col + 1) &&
@@ -49,15 +49,16 @@ public class MutantDetectorService {
                     sequences++;
                     System.out.println("Secuencia horizontal encontrada en: (" + fil + ", " + col + ")");
 
-                    break;
+                    if (sequences > 1) return true;
+
+                    col += 3;
                 }
-                if (sequences > 1) return true;
             }
         }
 
         // Vertical
         for (int col = 0; col < length; col++) {
-            for (int fil = 0; fil < (length / 2); fil++) {
+            for (int fil = 0; fil <= length - 4; fil++) {
                 char currentChar = dna[fil].charAt(col);
 
                 if (currentChar == dna[fil + 1].charAt(col) &&
@@ -66,10 +67,11 @@ public class MutantDetectorService {
 
                     sequences++;
                     System.out.println("Secuencia vertical encontrada en: (" + fil + ", " + col + ")");
-                    
-                    break;
+
+                    if (sequences > 1) return true;
+
+                    fil += 3;
                 }
-                if (sequences > 1) return true;
             }
         }
 
@@ -77,8 +79,8 @@ public class MutantDetectorService {
         Set<String> usedPosition = new HashSet<>();
 
         // Diagonal (de izquierda a derecha)
-        for (int fil = 0; fil < (length / 2); fil++) {
-            for (int col = 0; col < (length / 2); col++) {
+        for (int fil = 0; fil < (length - 4); fil++) {
+            for (int col = 0; col < (length - 4); col++) {
 
                 // Si la psicion ya fue usada se salta
                 if (usedPosition.contains(fil + "," + col)) continue;
@@ -102,8 +104,8 @@ public class MutantDetectorService {
         }
 
         // Diagonal (de derecha a izquierda)
-        for (int fil = 0; fil < (length / 2); fil++) {
-            for (int col = (length / 2); col < length; col++) {
+        for (int fil = 0; fil < (length - 4); fil++) {
+            for (int col = 3; col < length; col++) {
 
                 // Si la posicion ya fue usada se salta
                 if (usedPosition.contains(fil + "," + col)) continue;
