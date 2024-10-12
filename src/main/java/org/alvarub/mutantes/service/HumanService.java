@@ -9,6 +9,8 @@ import org.alvarub.mutantes.utils.mapper.HumanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.ExecutionException;
+
 @Service
 public class HumanService implements IHumanService {
 
@@ -30,8 +32,15 @@ public class HumanService implements IHumanService {
             throw new DnaAlreadyExistsException("A human with the same DNA already exists.");
         }
 
-        boolean isMutant = mutantDetectorService.verifyMutant(humanDTO.dna());
+        boolean isMutant;
 
+        try {
+            isMutant = mutantDetectorService.verifyMutant(humanDTO.dna());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Error verifying mutant DNA", e);
+        }
+
+        // Mapeo y persisto el humano
         Human human = humanMapper.humanDTOToHuman(humanDTO);
         human.setMutant(isMutant);
 
