@@ -35,7 +35,7 @@ public class MutantDetectorService {
     }
 
     //
-    public boolean verifyMutant(String[] dna) throws InterruptedException, ExecutionException {
+    public boolean verifyMutant(String[] dna) {
         AtomicInteger sequences = new AtomicInteger(0);
         ExecutorService executor = Executors.newFixedThreadPool(4);
 
@@ -52,7 +52,12 @@ public class MutantDetectorService {
         Future<Boolean> diagonalRTLResult = executor.submit(diagonalRTLTask);
 
         // Compruebo si se encontró más de una secuencia
-        boolean isMutant = horizontalResult.get() || verticalResult.get() || diagonalLTRResult.get() || diagonalRTLResult.get();
+        boolean isMutant = false;
+        try {
+            isMutant = horizontalResult.get() || verticalResult.get() || diagonalLTRResult.get() || diagonalRTLResult.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Error verifying mutant DNA", e);
+        }
 
         // Verifico si se encontraron mas de 1 secuencia
         if (sequences.get() >  1) {

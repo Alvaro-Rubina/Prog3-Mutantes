@@ -33,12 +33,7 @@ public class HumanService implements IHumanService {
         }
 
         boolean isMutant;
-
-        try {
-            isMutant = mutantDetectorService.verifyMutant(humanDTO.dna());
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Error verifying mutant DNA", e);
-        }
+        isMutant = mutantDetectorService.verifyMutant(humanDTO.dna());
 
         // Mapeo y persisto el humano
         Human human = humanMapper.humanDTOToHuman(humanDTO);
