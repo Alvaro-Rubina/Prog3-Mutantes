@@ -118,8 +118,8 @@ public class MutantDetectorService {
         int length = dna.length;
         Set<String> usedPosition = new HashSet<>();
 
-        for (int fil = 0; fil < (length - 4); fil++) {
-            for (int col = 0; col < (length - 4); col++) {
+        for (int fil = 0; fil <= length - 4; fil++) {
+            for (int col = 0; col <= length - 4; col++) {
                 if (usedPosition.contains(fil + "," + col)) continue;
 
                 char currentChar = dna[fil].charAt(col);
@@ -146,7 +146,7 @@ public class MutantDetectorService {
         int length = dna.length;
         Set<String> usedPosition = new HashSet<>();
 
-        for (int fil = 0; fil < (length - 4); fil++) {
+        for (int fil = 0; fil <= length - 4; fil++) {
             for (int col = 3; col < length; col++) {
                 if (usedPosition.contains(fil + "," + col)) continue;
 
