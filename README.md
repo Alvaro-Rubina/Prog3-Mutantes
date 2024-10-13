@@ -24,8 +24,8 @@ Para probar el proyecto necesitás tener instalado **Postman**, ya que mediante 
 
 ## Modo de Uso
 
-> [!NOTE]
-> **Endpoint para verificar ADN mutante**: [https://mutantes.onrender.com/mutant/](https://mutantes.onrender.com/mutant/)
+
+**Endpoint para verificar ADN mutante**: [https://mutantes.onrender.com/mutant/](https://mutantes.onrender.com/mutant/)
 * Para verificar si un ADN corresponde a un mutante, debes enviar una solicitud **POST** con un JSON al endpoint `/mutant/` de la API. El JSON debe seguir este formato:
 
 ```json
@@ -43,9 +43,9 @@ Para probar el proyecto necesitás tener instalado **Postman**, ya que mediante 
 ```
 Donde `name` es el nombre del humano y `dna` es un array de Strings que representa la secuencia de ADN. Para que el ADN sea considerado válido, debe ser una matriz `NxN` de al menos dimension 4x4. Por ejemplo, si hay 5 Strings, cada uno debe tener 5 letras.
 
+&nbsp;
 
-> [!NOTE]
-> **Endpoint para obtener estadísticas**: [https://mutantes.onrender.com/stats/](https://mutantes.onrender.com/stats/)
+**Endpoint para obtener estadísticas**: [https://mutantes.onrender.com/stats/](https://mutantes.onrender.com/stats/)
   
 * Si deseas obtener estadísticas sobre las verificaciones de ADN, podés hacer una solicitud **GET** al endpoint `/stats/`. Esto te devolverá un JSON con la siguiente información:
 
