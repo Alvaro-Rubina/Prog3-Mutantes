@@ -1,5 +1,4 @@
-<a id="readme-top"></a>
-  
+ 
 # Parcial Programación III: Mutantes
 
 Esta API ha sido desarrollada con el fin de detectar si un humano es mutante basándose en su secuencia de ADN. La secuencia de ADN se envía como un array de Strings, donde cada String representa una fila de una tabla (NxN). Si se encuentran más de una secuencia de cuatro letras iguales, de forma oblicua, horizontal o vertical, se reconoce el ADN como mutante. 
@@ -109,5 +108,3 @@ Donde `name` es el nombre del humano y `dna` es un array de Strings que represen
 
 
 > En este caso el ADN tiene una dimension de 3x4, por ende no cumple el requisito de ser NxN y no puede ser analizado.
-
-<p align="right">(<a href="readme-top">Volver al inicio</a>)</p>
